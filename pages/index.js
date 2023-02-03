@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
+import Link from 'next/link';
+import Date from '../components/date';
 import utilStyles from '../styles/utils.module.scss';
 import { getSortedPostsData } from '../lib/posts';
 
@@ -18,13 +20,13 @@ export async function getStaticProps() {
 
 // runs on server side at request time
 // fetch up to date data
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      // props for your component
-    }
-  }
-}
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {
+//       // props for your component
+//     }
+//   }
+// }
 
 export default function Home({ allPostsData }) {
   return (
@@ -44,12 +46,12 @@ export default function Home({ allPostsData }) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>{title}</Link>
               <br />
-              {id}
-              <br />
-              {date}
-            </li>
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
+          </li>
           ))}
         </ul>
       </section>
